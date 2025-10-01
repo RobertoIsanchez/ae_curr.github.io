@@ -126,6 +126,48 @@
             z-index: 1;
             padding: 6rem 5% 4rem;
             text-align: center;
+            /* Add min-height and overflow for video background */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Add video background styles */
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -2;
+            object-fit: cover;
+            opacity: 0.3;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(26, 26, 26, 0.7) 0%,
+                rgba(26, 26, 26, 0.85) 50%,
+                rgba(26, 26, 26, 0.95) 100%
+            );
+            z-index: -1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
         }
 
         .hero-title {
@@ -173,6 +215,8 @@
             position: relative;
             z-index: 1;
             padding: 2rem 5% 4rem;
+            /* Add background for parallax effect */
+            background: var(--dark);
         }
 
         .level-section {
@@ -336,6 +380,19 @@
             line-height: 1.2;
         }
 
+        /* Add collapsible content styles */
+        .module-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .module-card.expanded .module-details {
+            max-height: 1000px;
+            opacity: 1;
+        }
+
         .module-topics {
             list-style: none;
             margin-bottom: 1rem;
@@ -377,6 +434,7 @@
             font-weight: 700;
         }
 
+        /* Update module link to show expand/collapse indicator */
         .module-link {
             color: var(--primary);
             text-decoration: none;
@@ -385,7 +443,15 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            transition: gap 0.3s;
+            transition: all 0.3s;
+        }
+
+        .module-link .arrow {
+            transition: transform 0.3s;
+        }
+
+        .module-card.expanded .module-link .arrow {
+            transform: rotate(90deg);
         }
 
         .module-link:hover {
@@ -452,6 +518,8 @@
 
             .hero {
                 padding: 4rem 5% 3rem;
+                /* Adjust min-height for mobile */
+                min-height: 80vh;
             }
 
             .modules-grid {
@@ -491,15 +559,23 @@
     </header>
 
     <section class="hero">
-        <div class="level-badge">Temario Completo</div>
-        <h1 class="hero-title">
-            <span class="gradient-text">AFTER EFFECTS</span><br>
-            CURSO PROFESIONAL
-        </h1>
-        <p class="hero-subtitle">
-            Domina la animación y los efectos visuales desde cero hasta nivel avanzado. 
-            Explora cada módulo y descubre lo que aprenderás en este viaje creativo.
-        </p>
+        <video class="hero-video" autoplay muted loop playsinline>
+            <!-- Replace with your video URL or upload to assets -->
+            <source src="/placeholder.mp4?height=1080&width=1920&query=abstract+golden+particles+animation+motion+graphics" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="level-badge">Temario Completo</div>
+            <h1 class="hero-title">
+                <span class="gradient-text">AFTER EFFECTS</span><br>
+                CURSO PROFESIONAL
+            </h1>
+            <p class="hero-subtitle">
+                Domina la animación y los efectos visuales desde cero hasta nivel avanzado. 
+                Explora cada módulo y descubre lo que aprenderás en este viaje creativo.
+            </p>
+        </div>
     </section>
 
     <main>
@@ -524,15 +600,18 @@
                     <div class="module-content">
                         <div class="module-number">Módulo 01</div>
                         <h3 class="module-title">Introducción a After Effects</h3>
-                        <ul class="module-topics">
-                            <li>¿Qué es After Effects y para qué se utiliza?</li>
-                            <li>Recorrido por la interfaz y paneles</li>
-                            <li>Configuración del espacio de trabajo</li>
-                            <li>Preferencias básicas del programa</li>
-                        </ul>
-                        <div class="module-footer">
-                            <div class="task-count">Tareas: <span>2</span></div>
-                            <a href="#" class="module-link">Ver más →</a>
+                        <!-- Wrap topics and footer in collapsible container -->
+                        <div class="module-details">
+                            <ul class="module-topics">
+                                <li>¿Qué es After Effects y para qué se utiliza?</li>
+                                <li>Recorrido por la interfaz y paneles</li>
+                                <li>Configuración del espacio de trabajo</li>
+                                <li>Preferencias básicas del programa</li>
+                            </ul>
+                            <div class="module-footer">
+                                <div class="task-count">Tareas: <span>2</span></div>
+                                <a href="#" class="module-link" onclick="event.stopPropagation()">Ver más <span class="arrow">→</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -548,15 +627,17 @@
                     <div class="module-content">
                         <div class="module-number">Módulo 02</div>
                         <h3 class="module-title">Creación y Gestión de Composiciones</h3>
-                        <ul class="module-topics">
-                            <li>Concepto de composición</li>
-                            <li>Crear nuevas composiciones</li>
-                            <li>Importar archivos multimedia</li>
-                            <li>Organización de elementos</li>
-                        </ul>
-                        <div class="module-footer">
-                            <div class="task-count">Tareas: <span>2</span></div>
-                            <a href="#" class="module-link">Ver más →</a>
+                        <div class="module-details">
+                            <ul class="module-topics">
+                                <li>Concepto de composición</li>
+                                <li>Crear nuevas composiciones</li>
+                                <li>Importar archivos multimedia</li>
+                                <li>Organización de elementos</li>
+                            </ul>
+                            <div class="module-footer">
+                                <div class="task-count">Tareas: <span>2</span></div>
+                                <a href="#" class="module-link" onclick="event.stopPropagation()">Ver más <span class="arrow">→</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -572,15 +653,17 @@
                     <div class="module-content">
                         <div class="module-number">Módulo 03</div>
                         <h3 class="module-title">Capas y Propiedades de Transformación</h3>
-                        <ul class="module-topics">
-                            <li>Tipos de capas en After Effects</li>
-                            <li>Propiedades de transformación</li>
-                            <li>Animación básica con Keyframes</li>
-                            <li>Jerarquía de capas (Parenting)</li>
-                        </ul>
-                        <div class="module-footer">
-                            <div class="task-count">Tareas: <span>4</span></div>
-                            <a href="#" class="module-link">Ver más →</a>
+                        <div class="module-details">
+                            <ul class="module-topics">
+                                <li>Tipos de capas en After Effects</li>
+                                <li>Propiedades de transformación</li>
+                                <li>Animación básica con Keyframes</li>
+                                <li>Jerarquía de capas (Parenting)</li>
+                            </ul>
+                            <div class="module-footer">
+                                <div class="task-count">Tareas: <span>4</span></div>
+                                <a href="#" class="module-link" onclick="event.stopPropagation()">Ver más <span class="arrow">→</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -596,15 +679,17 @@
                     <div class="module-content">
                         <div class="module-number">Módulo 04</div>
                         <h3 class="module-title">Animación de Texto y Efectos Básicos</h3>
-                        <ul class="module-topics">
-                            <li>Herramienta de texto y panel Carácter</li>
-                            <li>Animadores de texto</li>
-                            <li>Aplicación de efectos preestablecidos</li>
-                            <li>Efectos comunes: Desenfoque, brillo, tinte</li>
-                        </ul>
-                        <div class="module-footer">
-                            <div class="task-count">Tareas: <span>3</span></div>
-                            <a href="#" class="module-link">Ver más →</a>
+                        <div class="module-details">
+                            <ul class="module-topics">
+                                <li>Herramienta de texto y panel Carácter</li>
+                                <li>Animadores de texto</li>
+                                <li>Aplicación de efectos preestablecidos</li>
+                                <li>Efectos comunes: Desenfoque, brillo, tinte</li>
+                            </ul>
+                            <div class="module-footer">
+                                <div class="task-count">Tareas: <span>3</span></div>
+                                <a href="#" class="module-link" onclick="event.stopPropagation()">Ver más <span class="arrow">→</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -620,15 +705,17 @@
                     <div class="module-content">
                         <div class="module-number">Módulo 05</div>
                         <h3 class="module-title">Previsualización y Exportación</h3>
-                        <ul class="module-topics">
-                            <li>Previsualización de RAM</li>
-                            <li>Panel de Cola de Procesamiento</li>
-                            <li>Configuración de ajustes de render</li>
-                            <li>Formatos de exportación básicos</li>
-                        </ul>
-                        <div class="module-footer">
-                            <div class="task-count">Tareas: <span>2</span></div>
-                            <a href="#" class="module-link">Ver más →</a>
+                        <div class="module-details">
+                            <ul class="module-topics">
+                                <li>Previsualización de RAM</li>
+                                <li>Panel de Cola de Procesamiento</li>
+                                <li>Configuración de ajustes de render</li>
+                                <li>Formatos de exportación básicos</li>
+                            </ul>
+                            <div class="module-footer">
+                                <div class="task-count">Tareas: <span>2</span></div>
+                                <a href="#" class="module-link" onclick="event.stopPropagation()">Ver más <span class="arrow">→</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -656,15 +743,17 @@
                     <div class="module-content">
                         <div class="module-number">Módulo 01</div>
                         <h3 class="module-title">Animación Avanzada y Editor de Gráficos</h3>
-                        <ul class="module-topics">
-                            <li>Curvas de velocidad en el Editor de Gráficos</li>
-                            <li>Tipos de interpolación de keyframes</li>
-                            <li>Animación de propiedades de forma</li>
-                            <li>Introducción a las expresiones</li>
-                        </ul>
-                        <div class="module-footer">
-                            <div class="task-count">Tareas: <span>3</span></div>
-                            <a href="#" class="module-link">Ver más →</a>
+                        <div class="module-details">
+                            <ul class="module-topics">
+                                <li>Curvas de velocidad en el Editor de Gráficos</li>
+                                <li>Tipos de interpolación de keyframes</li>
+                                <li>Animación de propiedades de forma</li>
+                                <li>Introducción a las expresiones</li>
+                            </ul>
+                            <div class="module-footer">
+                                <div class="task-count">Tareas: <span>3</span></div>
+                                <a href="#" class="module-link" onclick="event.stopPropagation()">Ver más <span class="arrow">→</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -680,15 +769,17 @@
                     <div class="module-content">
                         <div class="module-number">Módulo 02</div>
                         <h3 class="module-title">Máscaras, Mates y Capas de Ajuste</h3>
-                        <ul class="module-topics">
-                            <li>Creación y edición de máscaras</li>
-                            <li>Modos de máscara</li>
-                            <li>Mates de seguimiento (Track Mattes)</li>
-                            <li>Capas de ajuste y precomposiciones</li>
-                        </ul>
-                        <div class="module-footer">
-                            <div class="task-count">Tareas: <span>4</span></div>
-                            <a href="#" class="module-link">Ver más →</a>
+                        <div class="module-details">
+                            <ul class="module-topics">
+                                <li>Creación y edición de máscaras</li>
+                                <li>Modos de máscara</li>
+                                <li>Mates de seguimiento (Track Mattes)</li>
+                                <li>Capas de ajuste y precomposiciones</li>
+                            </ul>
+                            <div class="module-footer">
+                                <div class="task-count">Tareas: <span>4</span></div>
+                                <a href="#" class="module-link" onclick="event.stopPropagation()">Ver más <span class="arrow">→</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -704,15 +795,17 @@
                     <div class="module-content">
                         <div class="module-number">Módulo 03</div>
                         <h3 class="module-title">Corrección de Color y VFX Básicos</h3>
-                        <ul class="module-topics">
-                            <li>Herramientas de corrección de color</li>
-                            <li>Conceptos básicos de gradación</li>
-                            <li>Tracking de movimiento</li>
-                            <li>Estabilización de metraje</li>
-                        </ul>
-                        <div class="module-footer">
-                            <div class="task-count">Tareas: <span>4</span></div>
-                            <a href="#" class="module-link">Ver más →</a>
+                        <div class="module-details">
+                            <ul class="module-topics">
+                                <li>Herramientas de corrección de color</li>
+                                <li>Conceptos básicos de gradación</li>
+                                <li>Tracking de movimiento</li>
+                                <li>Estabilización de metraje</li>
+                            </ul>
+                            <div class="module-footer">
+                                <div class="task-count">Tareas: <span>4</span></div>
+                                <a href="#" class="module-link" onclick="event.stopPropagation()">Ver más <span class="arrow">→</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -728,15 +821,17 @@
                     <div class="module-content">
                         <div class="module-number">Módulo 04</div>
                         <h3 class="module-title">Introducción al 3D en After Effects</h3>
-                        <ul class="module-topics">
-                            <li>Capas 3D: Activación y manipulación</li>
-                            <li>Cámaras: Creación y animación</li>
-                            <li>Luces: Tipos y propiedades</li>
-                            <li>Sombras y oclusión ambiental</li>
-                        </ul>
-                        <div class="module-footer">
-                            <div class="task-count">Tareas: <span>3</span></div>
-                            <a href="#" class="module-link">Ver más →</a>
+                        <div class="module-details">
+                            <ul class="module-topics">
+                                <li>Capas 3D: Activación y manipulación</li>
+                                <li>Cámaras: Creación y animación</li>
+                                <li>Luces: Tipos y propiedades</li>
+                                <li>Sombras y oclusión ambiental</li>
+                            </ul>
+                            <div class="module-footer">
+                                <div class="task-count">Tareas: <span>3</span></div>
+                                <a href="#" class="module-link" onclick="event.stopPropagation()">Ver más <span class="arrow">→</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -764,15 +859,17 @@
                     <div class="module-content">
                         <div class="module-number">Módulo 01</div>
                         <h3 class="module-title">Composición y VFX Avanzados</h3>
-                        <ul class="module-topics">
-                            <li>Rotoscopia avanzada con Rotobrush</li>
-                            <li>Keying avanzado con Keylight</li>
-                            <li>Tracking de cámara 3D</li>
-                            <li>Integración de elementos 3D</li>
-                        </ul>
-                        <div class="module-footer">
-                            <div class="task-count">Tareas: <span>4</span></div>
-                            <a href="#" class="module-link">Ver más →</a>
+                        <div class="module-details">
+                            <ul class="module-topics">
+                                <li>Rotoscopia avanzada con Rotobrush</li>
+                                <li>Keying avanzado con Keylight</li>
+                                <li>Tracking de cámara 3D</li>
+                                <li>Integración de elementos 3D</li>
+                            </ul>
+                            <div class="module-footer">
+                                <div class="task-count">Tareas: <span>4</span></div>
+                                <a href="#" class="module-link" onclick="event.stopPropagation()">Ver más <span class="arrow">→</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -788,15 +885,17 @@
                     <div class="module-content">
                         <div class="module-number">Módulo 02</div>
                         <h3 class="module-title">Expresiones y Automatización</h3>
-                        <ul class="module-topics">
-                            <li>Sintaxis básica de expresiones JavaScript</li>
-                            <li>Expresiones comunes y útiles</li>
-                            <li>Controladores de expresiones</li>
-                            <li>Creación de plantillas MOGRTs</li>
-                        </ul>
-                        <div class="module-footer">
-                            <div class="task-count">Tareas: <span>4</span></div>
-                            <a href="#" class="module-link">Ver más →</a>
+                        <div class="module-details">
+                            <ul class="module-topics">
+                                <li>Sintaxis básica de expresiones JavaScript</li>
+                                <li>Expresiones comunes y útiles</li>
+                                <li>Controladores de expresiones</li>
+                                <li>Creación de plantillas MOGRTs</li>
+                            </ul>
+                            <div class="module-footer">
+                                <div class="task-count">Tareas: <span>4</span></div>
+                                <a href="#" class="module-link" onclick="event.stopPropagation()">Ver más <span class="arrow">→</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -812,15 +911,17 @@
                     <div class="module-content">
                         <div class="module-number">Módulo 03</div>
                         <h3 class="module-title">Integración y Flujo de Trabajo</h3>
-                        <ul class="module-topics">
-                            <li>Integración con Adobe Premiere Pro</li>
-                            <li>Integración con Photoshop e Illustrator</li>
-                            <li>Flujo de trabajo con software 3D</li>
-                            <li>Gestión avanzada de color y LUTs</li>
-                        </ul>
-                        <div class="module-footer">
-                            <div class="task-count">Tareas: <span>4</span></div>
-                            <a href="#" class="module-link">Ver más →</a>
+                        <div class="module-details">
+                            <ul class="module-topics">
+                                <li>Integración con Adobe Premiere Pro</li>
+                                <li>Integración con Photoshop e Illustrator</li>
+                                <li>Flujo de trabajo con software 3D</li>
+                                <li>Gestión avanzada de color y LUTs</li>
+                            </ul>
+                            <div class="module-footer">
+                                <div class="task-count">Tareas: <span>4</span></div>
+                                <a href="#" class="module-link" onclick="event.stopPropagation()">Ver más <span class="arrow">→</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -836,15 +937,17 @@
                     <div class="module-content">
                         <div class="module-number">Módulo 04</div>
                         <h3 class="module-title">Renderizado y Entrega Avanzada</h3>
-                        <ul class="module-topics">
-                            <li>Configuraciones de renderizado avanzadas</li>
-                            <li>Uso de Adobe Media Encoder</li>
-                            <li>Optimización para diferentes plataformas</li>
-                            <li>Exportación de pases de render</li>
-                        </ul>
-                        <div class="module-footer">
-                            <div class="task-count">Tareas: <span>4</span></div>
-                            <a href="#" class="module-link">Ver más →</a>
+                        <div class="module-details">
+                            <ul class="module-topics">
+                                <li>Configuraciones de renderizado avanzadas</li>
+                                <li>Uso de Adobe Media Encoder</li>
+                                <li>Optimización para diferentes plataformas</li>
+                                <li>Exportación de pases de render</li>
+                            </ul>
+                            <div class="module-footer">
+                                <div class="task-count">Tareas: <span>4</span></div>
+                                <a href="#" class="module-link" onclick="event.stopPropagation()">Ver más <span class="arrow">→</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -898,10 +1001,16 @@
             });
         });
 
-        // Module Card Hover Effects
+        /* Add accordion toggle functionality */
+        // Module Card Click to Expand/Collapse
         const moduleCards = document.querySelectorAll('.module-card');
         
         moduleCards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Toggle expanded class
+                this.classList.toggle('expanded');
+            });
+            
             card.addEventListener('mouseenter', function() {
                 this.style.zIndex = '10';
             });
@@ -917,9 +1026,31 @@
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
             const bgAnimation = document.querySelector('.bg-animation');
+            const heroVideo = document.querySelector('.hero-video');
+            const heroContent = document.querySelector('.hero-content');
+            const main = document.querySelector('main');
             
             if (bgAnimation) {
                 bgAnimation.style.transform = `translateY(${scrollY * 0.3}px)`;
+            }
+
+            // Parallax effect for hero video (slower movement)
+            if (heroVideo) {
+                heroVideo.style.transform = `translate(-50%, calc(-50% + ${scrollY * 0.5}px))`;
+            }
+
+            // Parallax effect for hero content (faster movement creates depth)
+            if (heroContent) {
+                heroContent.style.transform = `translateY(${scrollY * 0.2}px)`;
+                // Fade out hero content as user scrolls
+                const opacity = Math.max(0, 1 - scrollY / 500);
+                heroContent.style.opacity = opacity;
+            }
+
+            // Parallax effect for main content (slides up over hero)
+            if (main && scrollY > 100) {
+                const translateY = Math.min(0, -(scrollY - 100) * 0.1);
+                main.style.transform = `translateY(${translateY}px)`;
             }
             
             lastScrollY = scrollY;
